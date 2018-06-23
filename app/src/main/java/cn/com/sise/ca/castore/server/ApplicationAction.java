@@ -1,5 +1,7 @@
 package cn.com.sise.ca.castore.server;
 
+import android.app.Activity;
+
 import com.codimiracle.libs.lumehttp.HttpClient;
 import com.codimiracle.libs.lumehttp.HttpResponse;
 
@@ -16,11 +18,14 @@ import cn.com.sise.ca.castore.utils.JSONUtils;
 import cn.com.sise.ca.castore.utils.ServerUtils;
 
 public class ApplicationAction {
-    public static class DetailsAction implements ServerAction {
+    public static class DetailsAction extends CallbackRunOnUiServerAction<ApplicationMessage> {
         public static final String APPLICATION_DETAILS_QUERY = ServerUtils.BASE_QUERY_URL + "/Apps/";
         private int applicationId;
         private String applicationPackage;
-        private ServerActionCallback<ApplicationMessage, Message> callback;
+
+        public DetailsAction(Activity activity) {
+            super(activity);
+        }
 
         public int getApplicationId() {
             return applicationId;
@@ -34,49 +39,34 @@ public class ApplicationAction {
             return applicationPackage;
         }
 
-        public ServerActionCallback<ApplicationMessage, Message> getCallback() {
-            return callback;
-        }
-
-        public void setCallback(ServerActionCallback<ApplicationMessage, Message> callback) {
-            this.callback = callback;
-        }
-
         public void setApplicationPackage(String applicationPackage) {
             this.applicationPackage = applicationPackage;
         }
 
         @Override
-        public void execute() {
-            HttpClient httpClient = HttpUtils.getHttpClient();
-            try {
-                URL url;
-                if (applicationId > 0) {
-                    url = new URL(APPLICATION_DETAILS_QUERY + applicationId);
-                } else {
-                    url = new URL(APPLICATION_DETAILS_QUERY + applicationPackage);
-                }
-                httpClient.open(url);
-                HttpResponse response = httpClient.getHttpResponse();
-                ApplicationMessage applicationMessage = JSONUtils.fromJSON(response.getResponseBody(), ApplicationMessage.class);
-                if (applicationMessage != null) {
-                    callback.onSuccess(applicationMessage);
-                } else {
-                    callback.onFailure(Message.DATAFORMAT_ERROR_MESSAGE);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                callback.onFailure(Message.INTERNET_ERROR_MESSAGE);
+        protected ApplicationMessage handle() throws IOException {
+            HttpClient httpClient = getHttpClient();
+            URL url;
+            if (applicationId > 0) {
+                url = new URL(APPLICATION_DETAILS_QUERY + applicationId);
+            } else {
+                url = new URL(APPLICATION_DETAILS_QUERY + applicationPackage);
             }
+            httpClient.open(url);
+            HttpResponse response = httpClient.getHttpResponse();
+            return JSONUtils.fromJSON(response.getResponseBody(), ApplicationMessage.class);
         }
+
     }
 
-    public static class SearchAction implements ServerAction {
+    public static class SearchAction extends CallbackRunOnUiServerAction<ApplicationQueryMessage> {
         public static final String APPLICATION_SEARCH_QUERY = ServerUtils.BASE_QUERY_URL + "/Apps/Search/Pager/%d&kw=%s";
         private int pagerNumber = 1;
         private String keyword;
 
-        private ServerActionCallback<ApplicationQueryMessage, Message> callback;
+        public SearchAction(Activity activity) {
+            super(activity);
+        }
 
         public int getPagerNumber() {
             return pagerNumber;
@@ -89,14 +79,6 @@ public class ApplicationAction {
             this.pagerNumber = pagerNumber;
         }
 
-        public ServerActionCallback<ApplicationQueryMessage, Message> getCallback() {
-            return callback;
-        }
-
-        public void setCallback(ServerActionCallback<ApplicationQueryMessage, Message> callback) {
-            this.callback = callback;
-        }
-
         public void setKeyword(String keyword) {
             this.keyword = keyword;
         }
@@ -106,37 +88,31 @@ public class ApplicationAction {
         }
 
         @Override
-        public void execute() {
+        protected ApplicationQueryMessage handle() throws IOException {
             String realURL = String.format(Locale.CANADA, APPLICATION_SEARCH_QUERY, pagerNumber, URLEncoder.encode(keyword));
-            HttpClient httpClient = HttpUtils.getHttpClient();
+            HttpClient httpClient = getHttpClient();
+            URL url = new URL(realURL);
+            httpClient.open(url);
+            HttpResponse response = httpClient.getHttpResponse();
             try {
-                URL url = new URL(realURL);
-                httpClient.open(url);
-                HttpResponse response = httpClient.getHttpResponse();
-                ApplicationQueryMessage message = JSONUtils.fromJSON(response.getResponseBody(), ApplicationQueryMessage.class);
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (message != null) {
-                    callback.onSuccess(message);
-                } else {
-                    callback.onFailure(Message.DATAFORMAT_ERROR_MESSAGE);
-                }
-            } catch (IOException e) {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
-                callback.onFailure(Message.INTERNET_ERROR_MESSAGE);
             }
+            return JSONUtils.fromJSON(response.getResponseBody(), ApplicationQueryMessage.class);
         }
     }
 
-    public static class ListAction implements ServerAction {
+    public static class ListAction extends CallbackRunOnUiServerAction<ApplicationQueryMessage> {
 
         public static final String APPLICATION_LIST_QUERY = ServerUtils.BASE_QUERY_URL + "/Apps/Pager/%d";
 
         private int pagerNumber;
         private ServerActionCallback<ApplicationQueryMessage, Message> callback;
+
+        public ListAction(Activity activity) {
+            super(activity);
+        }
 
         public int getPagerNumber() {
             return pagerNumber;
@@ -146,18 +122,9 @@ public class ApplicationAction {
             this.pagerNumber = pagerNumber;
         }
 
-        public ServerActionCallback<ApplicationQueryMessage, Message> getCallback() {
-            return callback;
-        }
-
-        public void setCallback(ServerActionCallback<ApplicationQueryMessage, Message> callback) {
-            this.callback = callback;
-        }
-
         @Override
-        public void execute() {
-            HttpClient httpClient = HttpUtils.getHttpClient();
-
+        protected ApplicationQueryMessage handle() throws IOException {
+            return null;
         }
     }
 }

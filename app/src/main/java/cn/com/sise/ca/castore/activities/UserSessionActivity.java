@@ -29,7 +29,7 @@ public class UserSessionActivity extends ServerActionActivity {
 
     private UserAction.SignInAction signInAction;
     private UserAction.SignUpActionCallback signUpAction;
-    private EditText signInUsername, signInPassword, signUpUsername, signUpPassword,signUpPasswordAgain, signUpNickname, signUpIntroduction;
+    private EditText signInUsername, signInPassword, signUpUsername, signUpPassword, signUpPasswordAgain, signUpNickname, signUpIntroduction;
     private RadioGroup signUpGender;
     private Message message;
     private ViewFlipper flipper;
@@ -74,7 +74,7 @@ public class UserSessionActivity extends ServerActionActivity {
         signUpNickname = findViewById(R.id.user_sign_up_nickname);
         signUpLicense = findViewById(R.id.user_sign_up_license);
 
-        signInAction = new UserAction.SignInAction();
+        signInAction = new UserAction.SignInAction(this);
 
 
         application = (CAstoreApplication) getApplication();
@@ -88,36 +88,31 @@ public class UserSessionActivity extends ServerActionActivity {
             @Override
             public void onSuccess(Message message) {
                 UserSessionActivity.this.message = message;
-                runOnUiThread(new Runnable() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(UserSessionActivity.this);
+                builder.setTitle(R.string.app_user_sign_in);
+                builder.setMessage(UserSessionActivity.this.message.getMessage());
+                builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
-                    public void run() {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(UserSessionActivity.this);
-                        builder.setTitle(R.string.app_user_sign_in);
-                        builder.setMessage(UserSessionActivity.this.message.getMessage());
-                        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                            @Override
-                            public void onCancel(DialogInterface dialog) {
-                                if (!application.isLogged())
-                                    signInButton.setEnabled(true);
-                            }
-                        });
-                        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Log.i(TAG, UserSessionActivity.this.message.getIcon());
-                                Log.i(TAG, UserSessionActivity.this.message.getMessage());
-                                if (!UserSessionActivity.this.message.getIcon().equals("error")) {
-                                    application.setLogged(true);
-                                    UserSessionActivity.this.setResult(SIGN_IN_SUCCESS_CODE);
-                                    UserSessionActivity.this.finish();
-                                } else {
-                                    signInButton.setEnabled(true);
-                                }
-                            }
-                        });
-                        builder.show();
+                    public void onCancel(DialogInterface dialog) {
+                        if (!application.isLogged())
+                            signInButton.setEnabled(true);
                     }
                 });
+                builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.i(TAG, UserSessionActivity.this.message.getIcon());
+                        Log.i(TAG, UserSessionActivity.this.message.getMessage());
+                        if (!UserSessionActivity.this.message.getIcon().equals("error")) {
+                            application.setLogged(true);
+                            UserSessionActivity.this.setResult(SIGN_IN_SUCCESS_CODE);
+                            UserSessionActivity.this.finish();
+                        } else {
+                            signInButton.setEnabled(true);
+                        }
+                    }
+                });
+                builder.show();
             }
 
             @Override
@@ -142,7 +137,7 @@ public class UserSessionActivity extends ServerActionActivity {
 
     public void onSignUp(final View view) {
         if (signUpPassword.getText().toString().equals(signUpPasswordAgain.getText().toString()))
-        view.setEnabled(false);
+            view.setEnabled(false);
         signUpAction = new UserAction.SignUpActionCallback(this);
         signUpAction.setUsername(signUpUsername.getText().toString());
         signUpAction.setPassword(signUpPassword.getText().toString());
@@ -166,7 +161,7 @@ public class UserSessionActivity extends ServerActionActivity {
                     signInUsername.setText(signUpUsername.getText());
                     signInPassword.setText(signUpPassword.getText());
                     onSignIn(signInButton);
-                    } else {
+                } else {
                     Toast.makeText(UserSessionActivity.this, message.getMessage(), Toast.LENGTH_SHORT).show();
                     view.setEnabled(true);
                 }

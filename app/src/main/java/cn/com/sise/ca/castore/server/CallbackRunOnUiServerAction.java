@@ -18,6 +18,7 @@ public abstract class CallbackRunOnUiServerAction<T> implements ServerAction {
         httpClient = HttpUtils.getHttpClient();
     }
     protected abstract T handle() throws IOException;
+
     ServerActionCallback<T, Message> callback;
 
     public void setCallback(ServerActionCallback<T, Message> callback) {

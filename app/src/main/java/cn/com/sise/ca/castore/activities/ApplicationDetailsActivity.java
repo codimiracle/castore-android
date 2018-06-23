@@ -9,8 +9,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.storage.StorageManager;
-import android.os.storage.StorageVolume;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -90,10 +88,11 @@ public class ApplicationDetailsActivity extends ServerActionActivity implements 
                 final DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
                 String url = ServerUtils.BASE_URL + "/" + applicationMessage.getAppPackage().getPath();
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-                String destination = Environment.getExternalStorageDirectory().getAbsolutePath() + "/download/temp." + Math.random() + ".apk"; ;
+                String destination = Environment.getExternalStorageDirectory().getAbsolutePath() + "/download/temp." + Math.random() + ".apk";
+                ;
                 Log.i(TAG, "downloadlink:" + url);
                 Log.i(TAG, "destlink:" + destination);
-                request.setDestinationUri( Uri.fromFile(new File(destination)));
+                request.setDestinationUri(Uri.fromFile(new File(destination)));
                 request.setTitle(applicationMessage.getAppInfo().getTitle());
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                 final long downloadId = downloadManager.enqueue(request);
@@ -111,7 +110,7 @@ public class ApplicationDetailsActivity extends ServerActionActivity implements 
                                 Intent i = new Intent();
                                 i.setDataAndType(uri, downloadManager.getMimeTypeForDownloadedFile(downloadId));
                                 startActivity(i);
-                            } else if (DownloadManager.ACTION_NOTIFICATION_CLICKED.equals(action)){
+                            } else if (DownloadManager.ACTION_NOTIFICATION_CLICKED.equals(action)) {
                                 downloadManager.remove(downloadId);
                             }
                         }
@@ -147,7 +146,7 @@ public class ApplicationDetailsActivity extends ServerActionActivity implements 
         Log.i(TAG, "refresh start.");
         if (applicationMessage == null || applicationMessage.getAppInfo().getId() != id) {
             Log.i(TAG, "request start.");
-            ApplicationAction.DetailsAction action = new ApplicationAction.DetailsAction();
+            ApplicationAction.DetailsAction action = new ApplicationAction.DetailsAction(this);
             if (packageName != null) {
                 action.setApplicationPackage(packageName);
             } else {
@@ -160,17 +159,12 @@ public class ApplicationDetailsActivity extends ServerActionActivity implements 
                     Log.i(TAG, "request end.");
                     applicationMessage = message;
                     if (applicationMessage.getAppIcon() != null) {
-                        ResourceAction.ImageCacheAction iconImageCacheAction = new ResourceAction.ImageCacheAction();
+                        ResourceAction.ImageCacheAction iconImageCacheAction = new ResourceAction.ImageCacheAction(ApplicationDetailsActivity.this);
                         iconImageCacheAction.setResourceURL(ServerUtils.BASE_URL + "/" + applicationMessage.getAppIcon().getPath());
                         iconImageCacheAction.setCallback(new SimpleServerActionCallback<Bitmap>() {
                             @Override
                             public void onSuccess(final Bitmap message) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        applicationSummaryFacade.setIcon(message);
-                                    }
-                                });
+                                applicationSummaryFacade.setIcon(message);
                             }
 
                             @Override
@@ -180,29 +174,19 @@ public class ApplicationDetailsActivity extends ServerActionActivity implements 
                         });
                         addServerAction(iconImageCacheAction);
                     }
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            applicationSummaryFacade.setApplicationInfoBean(applicationMessage.getAppInfo());
-                            introductionFragment.setApplicationMessage(applicationMessage);
-                            commentFragment.setApplicationMessage(applicationMessage);
-                            getSupportActionBar().setTitle(applicationMessage.getAppInfo().getTitle());
-                        }
-                    });
+                    applicationSummaryFacade.setApplicationInfoBean(applicationMessage.getAppInfo());
+                    introductionFragment.setApplicationMessage(applicationMessage);
+                    commentFragment.setApplicationMessage(applicationMessage);
+                    getSupportActionBar().setTitle(applicationMessage.getAppInfo().getTitle());
                 }
 
                 @Override
                 public void onFailure(Message message) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(ApplicationDetailsActivity.this);
-                            builder.setTitle("应用查询");
-                            builder.setMessage("网络链接失败，请确认网络链接状态！");
-                            builder.setPositiveButton(android.R.string.yes, null);
-                            builder.show();
-                        }
-                    });
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ApplicationDetailsActivity.this);
+                    builder.setTitle("应用查询");
+                    builder.setMessage("网络链接失败，请确认网络链接状态！");
+                    builder.setPositiveButton(android.R.string.yes, null);
+                    builder.show();
                 }
             });
             addServerAction(action);

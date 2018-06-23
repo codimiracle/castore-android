@@ -3,8 +3,6 @@ package cn.com.sise.ca.castore.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -77,30 +75,20 @@ public class QueryResultActivity extends ServerActionActivity {
             finish();
         }
 
-        action = new ApplicationAction.SearchAction();
+        action = new ApplicationAction.SearchAction(this);
         action.setKeyword(keyword);
         action.setCallback(new SimpleServerActionCallback<ApplicationQueryMessage>() {
             @Override
             public void onSuccess(ApplicationQueryMessage message) {
                 results = message.getResults();
                 loading = false;
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        onNextPage(results);
-                    }
-                });
+                onNextPage(results);
             }
 
             @Override
             public void onFailure(Message message) {
-                final String m = message.getMessage();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(QueryResultActivity.this, m, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                String m = message.getMessage();
+                Toast.makeText(QueryResultActivity.this, m, Toast.LENGTH_SHORT).show();
             }
         });
         addServerAction(action);

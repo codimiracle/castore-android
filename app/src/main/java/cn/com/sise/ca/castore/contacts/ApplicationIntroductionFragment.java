@@ -101,7 +101,7 @@ public class ApplicationIntroductionFragment extends ServerActionFragment {
             }
         };
         for (ResourceInfoBean resourceInfoBean : applicationMessage.getAppPowerpoints()) {
-            powerpointAction = new ResourceAction.ImageCacheAction();
+            powerpointAction = new ResourceAction.ImageCacheAction(getActivity());
             powerpointAction.setResourceURL(ServerUtils.BASE_URL + "/" + resourceInfoBean.getPath());
             powerpointAction.setCallback(powerpointCallback);
             addServerAction(powerpointAction);

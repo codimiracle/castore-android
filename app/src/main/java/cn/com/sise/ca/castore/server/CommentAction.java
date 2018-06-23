@@ -15,30 +15,31 @@ import java.util.List;
 
 import cn.com.sise.ca.castore.server.som.CommentMessage;
 import cn.com.sise.ca.castore.server.som.Message;
-import cn.com.sise.ca.castore.utils.HttpUtils;
 import cn.com.sise.ca.castore.utils.JSONUtils;
 import cn.com.sise.ca.castore.utils.ServerUtils;
 
 public class CommentAction {
-    public static class CommentItAction implements ServerAction {
+    public static class CommentItAction extends CallbackRunOnUiServerAction<Message> {
         public static final String COMMENT_APPEND = ServerUtils.BASE_QUERY_URL + "/Comment/Append";
 
-        private ServerActionCallback<Message, Message> callback;
 
         private List<String> topics;
         private String comment;
         private int targetId;
 
-        public CommentItAction() {
+        public CommentItAction(Activity activity) {
+            super(activity);
             topics = new ArrayList<>();
         }
 
         public List<String> getTopics() {
             return topics;
         }
+
         public void addTopic(String topic) {
             this.topics.add(topic);
         }
+
         public void setTopics(List<String> topics) {
             this.topics = topics;
         }
@@ -59,50 +60,30 @@ public class CommentAction {
             this.comment = comment;
         }
 
-        public ServerActionCallback<Message, Message> getCallback() {
-            return callback;
-        }
-
-        public void setCallback(ServerActionCallback<Message, Message> callback) {
-            this.callback = callback;
-        }
-
         @Override
-        public void execute() {
-            HttpClient httpClient = HttpUtils.getHttpClient();
-            try {
-                URL url = new URL(COMMENT_APPEND);
-                httpClient.open(url);
-                //生成topic数据。
-                StringBuilder builder = new StringBuilder();
-                String step = "";
-                for (String topic: topics) {
-                    //去除不合法的 ','字符。
-                    builder.append(topic.replaceAll(",", ""));
-                    builder.append(step);
-                    step = ",";
-                }
-                FormData formData = new URLEncodedFormData();
-                formData.put("title", builder.toString());
-                formData.put("content", comment);
-                formData.put("aid", "" + getTargetId());
-                formData.put("comment_append", "comment_append");
-
-                HttpRequest request = httpClient.getHttpRequest();
-                request.setFormData(formData);
-                HttpResponse response = httpClient.getHttpResponse();
-                Message message = JSONUtils.fromJSON(response.getResponseBody(), Message.class);
-                if (message != null) {
-                    callback.onSuccess(message);
-                } else {
-                    callback.onFailure(Message.DATAFORMAT_ERROR_MESSAGE);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                callback.onFailure(Message.INTERNET_ERROR_MESSAGE);
-            } finally {
-                httpClient.close();
+        protected Message handle() throws IOException {
+            HttpClient httpClient = getHttpClient();
+            URL url = new URL(COMMENT_APPEND);
+            httpClient.open(url);
+            //生成topic数据。
+            StringBuilder builder = new StringBuilder();
+            String step = "";
+            for (String topic : topics) {
+                //去除不合法的 ','字符。
+                builder.append(topic.replaceAll(",", ""));
+                builder.append(step);
+                step = ",";
             }
+            FormData formData = new URLEncodedFormData();
+            formData.put("title", builder.toString());
+            formData.put("content", comment);
+            formData.put("aid", "" + getTargetId());
+            formData.put("comment_append", "comment_append");
+
+            HttpRequest request = httpClient.getHttpRequest();
+            request.setFormData(formData);
+            HttpResponse response = httpClient.getHttpResponse();
+            return JSONUtils.fromJSON(response.getResponseBody(), Message.class);
         }
     }
 
@@ -145,6 +126,7 @@ public class CommentAction {
             return JSONUtils.fromJSON(response.getResponseBody(), CommentMessage.class);
         }
     }
+
     public static class CommentEditAction implements ServerAction {
 
         @Override

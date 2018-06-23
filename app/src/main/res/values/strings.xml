@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">castore-client</string>
+    <string name="app_name">CA 应用商城</string>
     <string name="title_home">首页</string>
     <string name="title_category">分类</string>
     <string name="title_discover">发现</string>
     <string name="title_app_manage">管理</string>
-    <string name="title_activity_main">CAstore</string>
+    <string name="title_activity_main">CA 应用商城</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>

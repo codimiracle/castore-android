@@ -60,7 +60,7 @@ public class ApplicationCommentFragment extends ServerActionFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        imageCacheAction = new ResourceAction.ImageCacheAction();
+        imageCacheAction = new ResourceAction.ImageCacheAction(getActivity());
     }
 
     @Nullable
@@ -108,7 +108,7 @@ public class ApplicationCommentFragment extends ServerActionFragment {
                 }
                 if (!commenting) {
                     commenting = true;
-                    commentItAction = new CommentAction.CommentItAction();
+                    commentItAction = new CommentAction.CommentItAction(getActivity());
                     commentItAction.setTargetId(applicationMessage.getAppInfo().getContentId());
                     commentItAction.addTopic(viewCommentTheme.getText().toString());
                     commentItAction.setComment(viewCommentContent.getText().toString());

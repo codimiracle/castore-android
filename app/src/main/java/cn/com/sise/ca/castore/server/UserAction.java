@@ -9,12 +9,10 @@ import com.codimiracle.libs.lumehttp.HttpResponse;
 import com.codimiracle.libs.lumehttp.URLEncodedFormData;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import cn.com.sise.ca.castore.server.som.Message;
 import cn.com.sise.ca.castore.server.som.UserMessage;
-import cn.com.sise.ca.castore.utils.HttpUtils;
 import cn.com.sise.ca.castore.utils.JSONUtils;
 import cn.com.sise.ca.castore.utils.ServerUtils;
 
@@ -23,71 +21,70 @@ import cn.com.sise.ca.castore.utils.ServerUtils;
  * the Action just considering for the single thread.
  */
 public class UserAction {
-    public static class SignInAction implements ServerAction {
+    public static class SignInAction extends CallbackRunOnUiServerAction<Message> {
         public static final String SIGN_IN_QUERY = ServerUtils.BASE_QUERY_URL + "/User/SignIn";
         private static final String SIGN_IN_ACTION = "user_sign_in";
-        private ServerActionCallback<Message, Message> callback;
+
         private String username;
         private String password;
 
-        public void setCallback(ServerActionCallback<Message, Message> callback) {
-            this.callback = callback;
+        public SignInAction(Activity activity) {
+            super(activity);
         }
 
         public void setUsername(String username) {
             this.username = username;
         }
 
+        public String getUsername() {
+            return username;
+        }
+
         public void setPassword(String password) {
             this.password = password;
         }
 
-        @Override
-        public void execute() {
-            HttpClient client = HttpUtils.getHttpClient();
-            try {
-                URL url = new URL(SIGN_IN_QUERY);
-                client.open(url);
-                HttpRequest request = client.getHttpRequest();
-                FormData data = new URLEncodedFormData();
-                data.put("username", username);
-                data.put("password", password);
-                data.put(SIGN_IN_ACTION, SIGN_IN_ACTION);
-                request.setFormData(data);
-                HttpResponse response = client.getHttpResponse();
-                Message message = JSONUtils.fromJSON(response.getResponseBody(), Message.class);
-                if (message != null)
-                    callback.onSuccess(message);
-                else
-                    callback.onFailure(Message.DATAFORMAT_ERROR_MESSAGE);
-            } catch (IOException e) {
-                callback.onFailure(Message.INTERNET_ERROR_MESSAGE);
-            } finally {
-                if (client != null)
-                    client.close();
-            }
+        public String getPassword() {
+            return password;
+        }
 
+        @Override
+        protected Message handle() throws IOException {
+            HttpClient client = getHttpClient();
+            URL url = new URL(SIGN_IN_QUERY);
+            client.open(url);
+            HttpRequest request = client.getHttpRequest();
+            FormData data = new URLEncodedFormData();
+            data.put("username", username);
+            data.put("password", password);
+            data.put(SIGN_IN_ACTION, SIGN_IN_ACTION);
+            request.setFormData(data);
+            HttpResponse response = client.getHttpResponse();
+            return JSONUtils.fromJSON(response.getResponseBody(), Message.class);
         }
     }
 
-    public static class SignOutAction implements ServerAction {
+    public static class SignOutAction extends CallbackRunOnUiServerAction<Message> {
         public static final String SIGN_OUT_QUERY = ServerUtils.BASE_QUERY_URL + "/User/SignOut";
 
-        @Override
-        public void execute() {
-            try {
-                URL url = new URL(SIGN_OUT_QUERY);
+        public SignOutAction(Activity activity) {
+            super(activity);
+        }
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+        @Override
+        protected Message handle() throws IOException {
+            HttpClient httpClient = getHttpClient();
+            URL url = new URL(SIGN_OUT_QUERY);
+            httpClient.open(url);
+            HttpResponse response = httpClient.getHttpResponse();
+            return JSONUtils.fromJSON(response.getResponseBody(), Message.class);
         }
     }
 
     public static class SignUpActionCallback extends CallbackRunOnUiServerAction<Message> {
         public static final String SIGN_UP_QUERY = ServerUtils.BASE_QUERY_URL + "/User/SignUp";
 
-        private String username,password,introduction,nickname;
+        private String username, password, introduction, nickname;
         private int gender;
         private boolean license;
 
@@ -156,7 +153,7 @@ public class UserAction {
             formData.put("gender", "" + gender);
             formData.put("description", introduction);
             formData.put("license", license ? "on" : "off");
-            formData.put("user_sign_up","user_sign_up");
+            formData.put("user_sign_up", "user_sign_up");
 
             HttpRequest request = httpClient.getHttpRequest();
             request.setFormData(formData);
@@ -165,37 +162,21 @@ public class UserAction {
         }
     }
 
-    public static class UserProfileAction implements ServerAction {
+    public static class UserProfileAction extends CallbackRunOnUiServerAction<UserMessage> {
+
         public static final String WHO_IS_ME_QUERY = ServerUtils.BASE_QUERY_URL + "/User";
 
-        public ServerActionCallback<UserMessage, Message> callback;
-
-        public void setCallback(ServerActionCallback<UserMessage, Message> callback) {
-            this.callback = callback;
-        }
-
-        public ServerActionCallback<UserMessage, Message> getCallback() {
-            return callback;
+        public UserProfileAction(Activity activity) {
+            super(activity);
         }
 
         @Override
-        public void execute() {
-            HttpClient httpClient = HttpUtils.getHttpClient();
-            try {
-                URL url = new URL(WHO_IS_ME_QUERY);
-                httpClient.open(url);
-                HttpResponse response = httpClient.getHttpResponse();
-                UserMessage userMessage = JSONUtils.fromJSON(response.getResponseBody(), UserMessage.class);
-                if (userMessage != null)
-                    callback.onSuccess(userMessage);
-                else
-                    callback.onFailure(Message.DATAFORMAT_ERROR_MESSAGE);
-            } catch (IOException e) {
-                e.printStackTrace();
-                callback.onFailure(Message.INTERNET_ERROR_MESSAGE);
-            } finally {
-                httpClient.close();
-            }
+        protected UserMessage handle() throws IOException {
+            HttpClient httpClient = getHttpClient();
+            URL url = new URL(WHO_IS_ME_QUERY);
+            httpClient.open(url);
+            HttpResponse response = httpClient.getHttpResponse();
+            return JSONUtils.fromJSON(response.getResponseBody(), UserMessage.class);
         }
     }
 }

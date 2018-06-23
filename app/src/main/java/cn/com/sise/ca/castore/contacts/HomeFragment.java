@@ -12,16 +12,11 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.com.sise.ca.castore.R;
 import cn.com.sise.ca.castore.adapters.HomePageAdapter;
 import cn.com.sise.ca.castore.contacts.abstracts.HomeContact;
 import cn.com.sise.ca.castore.server.HomeAction;
-import cn.com.sise.ca.castore.server.ServerActionCallback;
 import cn.com.sise.ca.castore.server.SimpleServerActionCallback;
-import cn.com.sise.ca.castore.server.som.AdvertisementInfoBean;
 import cn.com.sise.ca.castore.server.som.HomePageInfoBean;
 import cn.com.sise.ca.castore.server.som.HomePageMessage;
 import cn.com.sise.ca.castore.server.som.Message;
@@ -81,9 +76,9 @@ public class HomeFragment extends ServerActionFragment implements HomeContact.Vi
         super.onCreate(savedInstanceState);
         homePageAdapter = new HomePageAdapter();
         homePageMessage = new HomePageMessage();
-        advertisementAction = new HomeAction.AdvertisementAction();
+        advertisementAction = new HomeAction.AdvertisementAction(getActivity());
         advertisementAction.setCallback(callback);
-        homePageAction = new HomeAction.HomePageAction();
+        homePageAction = new HomeAction.HomePageAction(getActivity());
         homePageAction.setCallback(callback);
     }
 

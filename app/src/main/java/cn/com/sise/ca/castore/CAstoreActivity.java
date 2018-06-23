@@ -113,7 +113,7 @@ public class CAstoreActivity extends AppCompatActivity
         super.onResume();
         serverActionServiceTool.bind();
         if (castoreApplication.isLogged() && castoreApplication.getUserInfoBean() == null) {
-            UserAction.UserProfileAction userProfileAction = new UserAction.UserProfileAction();
+            UserAction.UserProfileAction userProfileAction = new UserAction.UserProfileAction(this);
             userProfileAction.setCallback(new SimpleServerActionCallback<UserMessage>() {
                 @Override
                 public void onSuccess(UserMessage message) {
