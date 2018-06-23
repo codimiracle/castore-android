@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group>
+        <item
+            android:id="@+id/user_aside_bar_favourite"
+            android:icon="@drawable/ic_favourite_black_24dp"
+            android:title="@string/user_favourits" />
+        <item
+            android:id="@+id/user_aside_bar_personal"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="@string/user_profile" />
+        <item
+            android:id="@+id/user_aside_bar_preferences"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/user_preferences" />
+    </group>
+
+    <item android:title="About">
+        <menu>
+            <item
+                android:id="@+id/user_aside_bar_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="分享 CAstore" />
+            <item
+                android:id="@+id/user_aside_bar_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="CAstore 官网" />
+        </menu>
+    </item>
+
+</menu>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/CAStyle.PanelButton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/som_article_album_title"
+        style="@style/CAStyle.Header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hello | 第一次也是最美好的一次" />
+
+    <TextView
+        android:id="@+id/som_article_album_author"
+        style="@style/CAStyle.InnerHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/som_article_album_title"
+        android:text="Author" />
+
+    <RelativeLayout
+        android:id="@+id/som_article_album_summary_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/som_article_album_author"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/som_article_album_summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/som_article_album_summary_poster"
+            android:ellipsize="end"
+            android:lines="8"
+            android:text="The first time i see the hezhengweng is the beginning of i open the door." />
+
+        <ImageView
+            android:id="@+id/som_article_album_summary_poster"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_launcher" />
+
+    </RelativeLayout>
+
+
+    <include
+        android:id="@+id/som_app_info"
+        layout="@layout/som_app_summary_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/som_article_album_summary_info" />
+
+</RelativeLayout>

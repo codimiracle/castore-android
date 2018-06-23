@@ -1,0 +1,104 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="CAStyle">
+    </style>
+
+    <!-- 风格盒子 -->
+    <style name="CAStyle.Box">
+        <item name="android:background">@color/colorWhite</item>
+        <item name="android:padding">4dp</item>
+    </style>
+
+    <!-- 按钮区 -->
+    <style name="CAStyle.BaseButton" parent="CAStyle">
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+    <style name="CAStyle.SimpleButton" parent="CAStyle.BaseButton">
+        <item name="android:background">@drawable/ca_style_btn</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style>
+
+    <style name="CAStyle.Button" parent="CAStyle.SimpleButton">
+        <item name="android:textColor">@color/colorCADark</item>
+        <item name="android:layout_margin">2dp</item>
+    </style>
+    <style name="CAStyle.PanelButton" parent="CAStyle.BaseButton">
+        <item name="android:background">@drawable/ca_style_panel_btn</item>
+    </style>
+
+    <style name="CAStyle.PictureButton" parent="CAStyle.BaseButton">
+    </style>
+
+    <style name="CAStyle.KeywordBox" parent="CAStyle.SimpleButton">
+        <item name="android:layout_margin">4dp</item>
+    </style>
+
+    <style name="CAStyle.EditText" parent="Base.Widget.AppCompat.Button">
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:background">@drawable/ca_style_edittext</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:gravity">left|center_vertical</item>
+    </style>
+
+    <style name="CAStyle.Header" parent="CAStyle.Box">
+        <item name="android:textColor">@color/colorCADark</item>
+        <item name="android:paddingLeft">2dp</item>
+        <item name="android:paddingRight">2dp</item>
+    </style>
+
+    <style name="CAStyle.InnerHeader" parent="CAStyle.Title">
+        <item name="android:layout_marginLeft">2dp</item>
+        <item name="android:layout_marginRight">2dp</item>
+    </style>
+
+    <style name="CAStyle.BottomHeader" parent="CAStyle">
+        <item name="android:textColor">@color/colorCADark</item>
+    </style>
+
+    <style name="CAStyle.Title" parent="CAStyle">
+        <item name="android:textColor">@color/colorCADark</item>
+    </style>
+
+
+    <style name="CAStyle.Icon" parent="CAStyle">
+    </style>
+
+    <style name="CAStyle.Body" parent="CAStyle">
+
+    </style>
+
+    <style name="CAStyle.MiniIcon" parent="CAStyle">
+    </style>
+    <style name="CAStyle.MiniTitle" parent="CAStyle">
+        <item name="android:textColor">@color/colorCADark</item>
+    </style>
+    <style name="CAStyle.MarkGrade" parent="CAStyle.Title">
+        <item name="android:textColor">@color/colorCARed</item>
+        <item name="android:paddingLeft">4dp</item>
+    </style>
+
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+
+</resources>

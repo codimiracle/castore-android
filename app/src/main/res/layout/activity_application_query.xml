@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_view_background"
+    android:orientation="vertical"
+    tools:context=".activities.ApplicationQueryActivity">
+
+    <LinearLayout
+        style="@style/CAStyle.Box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/view_split_margin_bottom"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <AutoCompleteTextView
+            android:id="@+id/search_keyword"
+            style="@style/CAStyle.EditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/app_search_keyword"
+            android:singleLine="true" />
+
+        <Button
+            style="@style/CAStyle.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onSearch"
+            android:text="@string/app_search" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/search_history_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/view_split_margin_bottom"
+        style="@style/CAStyle.Box"
+        android:orientation="vertical">
+
+
+        <TextView
+            style="@style/CAStyle.Header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_recent_search_history" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/history_list"
+            android:layout_width="match_parent"
+            android:layout_height="128dp">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/CAStyle.Box"
+        android:orientation="vertical">
+
+
+        <TextView
+            style="@style/CAStyle.Header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="热门推荐" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow>
+
+                <TextView android:text="" />
+
+            </TableRow>
+
+            <TableRow>
+
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
+</LinearLayout>

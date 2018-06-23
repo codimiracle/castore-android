@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_view_background"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/home_page_poster_album"
+        layout="@layout/som_poster_album_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/view_split_margin_bottom" />
+
+
+    <TextView
+        android:id="@+id/home_page_oddments_apps_title"
+        style="@style/CAStyle.Header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hello World"/>
+
+    <LinearLayout
+        android:id="@+id/home_page_oddments_apps_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/view_split_margin_bottom"
+        android:orientation="horizontal">
+
+        <include
+            layout="@layout/som_app_simple_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <include
+            layout="@layout/som_app_simple_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <include
+            layout="@layout/som_app_simple_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <include
+            layout="@layout/som_app_simple_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/home_page_article_album"
+        layout="@layout/som_article_album_item"
+        android:background="@color/view_white_background"
+        android:padding="@dimen/view_padding" />
+
+</LinearLayout>

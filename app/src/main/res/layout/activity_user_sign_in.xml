@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.UserSessionActivity">
+
+    <ViewFlipper
+        android:id="@+id/user_session_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/CAStyle.Header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@id/user_sign_in_username"
+                android:text="@string/app_user_username" />
+
+            <EditText
+                android:id="@+id/user_sign_in_username"
+                style="@style/CAStyle.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true" />
+
+            <TextView
+                style="@style/CAStyle.Header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@id/user_sign_in_password"
+                android:text="@string/app_user_password" />
+
+            <EditText
+                android:id="@+id/user_sign_in_password"
+                style="@style/CAStyle.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+
+
+            <Button
+                android:id="@+id/user_sign_in_button"
+                style="@style/CAStyle.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onSignIn"
+                android:text="@string/app_user_sign_in" />
+
+            <Button
+                android:id="@+id/user_sign_up_page_button"
+                style="@style/CAStyle.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onSignUp"
+                android:text="@string/app_user_sign_up" />
+        </LinearLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    style="@style/CAStyle.Header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@id/user_sign_up_username"
+                    android:text="@string/app_user_username" />
+
+                <EditText
+                    android:id="@+id/user_sign_up_username"
+                    style="@style/CAStyle.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true" />
+
+                <TextView
+                    style="@style/CAStyle.Header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@id/user_sign_up_passwrod"
+                    android:text="@string/app_user_password" />
+
+                <EditText
+                    android:id="@+id/user_sign_up_passwrod"
+                    style="@style/CAStyle.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:singleLine="true" />
+
+                <TextView
+                    style="@style/CAStyle.Header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@id/user_sign_up_passwrod_again"
+                    android:text="@string/app_user_password_agin" />
+
+                <EditText
+                    android:id="@+id/user_sign_up_passwrod_again"
+                    style="@style/CAStyle.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:singleLine="true" />
+
+                <TextView
+                    style="@style/CAStyle.Header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@id/user_sign_up_gender"
+                    android:text="@string/app_user_gender" />
+
+                <RadioGroup
+                    android:id="@+id/user_sign_up_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/gender_secret"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/secret" />
+
+                    <RadioButton
+                        android:id="@+id/gender_boy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/gender_boy"/>
+
+                    <RadioButton
+                        android:id="@+id/gender_girl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/gender_girl"/>
+
+                </RadioGroup>
+
+                <TextView
+                    style="@style/CAStyle.Header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@id/user_sign_up_nickname"
+                    android:text="@string/app_user_nickname" />
+
+                <EditText
+                    android:id="@+id/user_sign_up_nickname"
+                    style="@style/CAStyle.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true" />
+
+                <TextView
+                    style="@style/CAStyle.Header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@id/user_sign_up_introduction"
+                    android:text="@string/app_user_introduction" />
+
+                <EditText
+                    android:id="@+id/user_sign_up_introduction"
+                    style="@style/CAStyle.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="128dp"
+                    android:inputType="text"
+                    android:minLines="10"/>
+
+                <CheckBox
+                    android:id="@+id/user_sign_up_license"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="同意《服务条款》"/>
+
+                <Button
+                    android:id="@+id/user_sign_up_button"
+                    style="@style/CAStyle.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onSignUp"
+                    android:text="@string/app_user_sign_up" />
+
+                <Button
+                    android:id="@+id/user_sign_in_page_button"
+                    style="@style/CAStyle.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onSignUp"
+                    android:text="@string/app_user_sign_in" />
+
+            </LinearLayout>
+        </ScrollView>
+    </ViewFlipper>
+</LinearLayout>

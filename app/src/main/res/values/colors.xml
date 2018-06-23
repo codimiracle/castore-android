@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#212121</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#f11612</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorCADark">#212121</color>
+    <color name="colorGray">#cacaca</color>
+    <color name="colorCARed">#f11612</color>
+    <color name="app_view_background">#4bc2c2c2</color>
+    <color name="view_white_background">#ffffff</color>
+    <color name="colorShutdown">#88e4e4e4</color>
+    <color name="colorWhiteGray">#88a9a9a9</color>
+</resources>

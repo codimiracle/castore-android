@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/som_app_summary"
+    style="@style/CAStyle.PanelButton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/som_comment_user_icon"
+        style="@style/CAStyle.Icon"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/som_comment_vote"
+        android:layout_toRightOf="@id/som_comment_user_icon"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/som_comment_title"
+            style="@style/CAStyle.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Test App" />
+
+        <TextView
+            android:id="@+id/som_comment_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text="Hello World" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/som_comment_vote"
+        style="@style/CAStyle.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="@string/vote" />
+
+
+</RelativeLayout>

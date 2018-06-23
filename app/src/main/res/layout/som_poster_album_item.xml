@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/CAStyle.Box"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/view_padding">
+
+    <RelativeLayout
+        android:id="@+id/som_poster_album_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/som_poster_album_icon"
+            style="@style/CAStyle.Header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_settings_black_24dp" />
+
+        <TextView
+            android:id="@+id/som_poster_album_title"
+            style="@style/CAStyle.Header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/som_poster_album_icon"
+            android:text="Hello World" />
+
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/som_poster_album_poster"
+        style="@style/CAStyle.PanelButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/som_main_op_component"
+        android:layout_below="@id/som_poster_album_header"
+        android:src="@mipmap/ic_launcher" />
+
+    <LinearLayout
+        android:id="@+id/som_main_op_component"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/som_poster_album_header"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/som_app_icon"
+            style="@style/CAStyle.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/som_app_icon"
+            android:scaleType="center"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/som_app_name"
+            style="@style/CAStyle.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/som_app_name" />
+
+        <TextView
+            android:id="@+id/som_app_people"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Hello" />
+
+        <TextView
+            android:id="@+id/som_app_download"
+            style="@style/CAStyle.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_download" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/som_poster_album_app_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/som_poster_album_poster"
+        android:layout_toLeftOf="@id/som_poster_album_app_vote_label"
+        android:layout_toStartOf="@id/som_poster_album_app_vote_label" />
+
+    <TextView
+        android:id="@+id/som_poster_album_app_vote_label"
+        style="@style/CAStyle.BottomHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/som_poster_album_poster"
+        android:layout_toLeftOf="@id/som_poster_album_app_vote"
+        android:layout_toStartOf="@id/som_poster_album_app_vote"
+        android:text="@string/app_mark_grade" />
+
+    <TextView
+        android:id="@+id/som_poster_album_app_vote"
+        style="@style/CAStyle.MarkGrade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/som_poster_album_poster"
+        android:text="7.3" />
+</RelativeLayout>
